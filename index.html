@@ -6,117 +6,28 @@
 <title>漠视安全屋模拟器</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body {
-  height: 100%;
-  height: 100dvh;
-  overflow: hidden;
-  -webkit-overflow-scrolling: touch;
-}
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
-  background: #0c0d10;
-  color: #eceff3;
-  display: flex;
-  flex-direction: column;
-  touch-action: manipulation;
-}
-#scene {
-  flex: 1;
-  position: relative;
-  background-size: cover;
-  background-position: center;
-  transition: background-image 0.8s ease;
-  overflow: hidden;
-  min-height: 0;
-}
-#light-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  mix-blend-mode: soft-light;
-  transition: opacity 0.3s;
-}
-.weather-effect {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.rain {
-  background-image: linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, transparent 100%), repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(200,220,255,0.15) 2px, rgba(200,220,255,0.15) 4px);
-  animation: rain-fall 0.4s linear infinite;
-  opacity: 0;
-}
+html, body { height: 100%; height: 100dvh; overflow: hidden; -webkit-overflow-scrolling: touch; }
+body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; background: #0c0d10; color: #eceff3; display: flex; flex-direction: column; touch-action: manipulation; }
+#scene { flex: 1; position: relative; background-size: cover; background-position: center; transition: background 0.8s ease; overflow: hidden; min-height: 0; }
+#light-overlay { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: soft-light; transition: opacity 0.3s; }
+.weather-effect { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.rain { background-image: linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, transparent 100%), repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(200,220,255,0.15) 2px, rgba(200,220,255,0.15) 4px); animation: rain-fall 0.4s linear infinite; opacity: 0; }
 @keyframes rain-fall { from { background-position: 0 0; } to { background-position: 0 100px; } }
-.snow {
-  background-image: radial-gradient(circle, white 1px, transparent 1px);
-  background-size: 18px 18px;
-  animation: snow-fall 8s linear infinite;
-  opacity: 0;
-}
+.snow { background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 18px 18px; animation: snow-fall 8s linear infinite; opacity: 0; }
 @keyframes snow-fall { from { background-position: 0 0; } to { background-position: 18px 180px; } }
 .lightning { background: white; opacity: 0; }
-.fog {
-  background: linear-gradient(to bottom, rgba(200,200,200,0.3), rgba(180,180,180,0.6));
-  animation: fog-move 20s ease-in-out infinite alternate;
-  opacity: 0;
-}
+.fog { background: linear-gradient(to bottom, rgba(200,200,200,0.3), rgba(180,180,180,0.6)); animation: fog-move 20s ease-in-out infinite alternate; opacity: 0; }
 @keyframes fog-move { from { transform: translateX(0); } to { transform: translateX(-30px); } }
-.sun {
-  background: radial-gradient(circle at 30% 20%, rgba(255,220,150,0.4), transparent 60%);
-  opacity: 0;
-  animation: sun-glow 6s ease-in-out infinite alternate;
-}
+.sun { background: radial-gradient(circle at 30% 20%, rgba(255,220,150,0.4), transparent 60%); opacity: 0; animation: sun-glow 6s ease-in-out infinite alternate; }
 @keyframes sun-glow { from { opacity: 0.3; } to { opacity: 0.7; } }
-#controls {
-  background: rgba(12,13,16,0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  border-top: 1px solid #16181d;
-  flex-shrink: 0;
-}
-button, select {
-  background: #16181d;
-  color: #eceff3;
-  border: 1px solid #9aa1ab;
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-size: 15px;
-  cursor: pointer;
-  min-height: 44px;
-  -webkit-appearance: none;
-  appearance: none;
-}
-select {
-  padding-right: 32px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239aa1ab' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-}
+#controls { background: rgba(12,13,16,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; align-items: center; border-top: 1px solid #16181d; flex-shrink: 0; }
+button, select { background: #16181d; color: #eceff3; border: 1px solid #9aa1ab; padding: 10px 16px; border-radius: 10px; font-size: 15px; cursor: pointer; min-height: 44px; -webkit-appearance: none; appearance: none; }
+select { padding-right: 32px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239aa1ab' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
 button:active, select:active { background: #2a2d35; }
 #noise-btn { background: #2a4a3a; }
-#status {
-  text-align: center;
-  font-size: 12px;
-  color: #9aa1ab;
-  padding: 6px 12px calc(6px + env(safe-area-inset-bottom));
-  flex-shrink: 0;
-  background: #0c0d10;
-}
-@media (max-width: 600px) {
-  #controls { padding: 8px 10px calc(8px + env(safe-area-inset-bottom)); gap: 6px; }
-  button, select { font-size: 14px; padding: 9px 12px; min-height: 42px; flex: 1 1 auto; min-width: 90px; }
-  #status { font-size: 11px; padding: 4px 10px calc(4px + env(safe-area-inset-bottom)); }
-}
-@media (max-width: 380px) {
-  button, select { font-size: 13px; padding: 8px 10px; }
-}
+#status { text-align: center; font-size: 12px; color: #9aa1ab; padding: 6px 12px calc(6px + env(safe-area-inset-bottom)); flex-shrink: 0; background: #0c0d10; }
+@media (max-width: 600px) { #controls { padding: 8px 10px calc(8px + env(safe-area-inset-bottom)); gap: 6px; } button, select { font-size: 14px; padding: 9px 12px; min-height: 42px; flex: 1 1 auto; min-width: 90px; } #status { font-size: 11px; padding: 4px 10px calc(4px + env(safe-area-inset-bottom)); } }
+@media (max-width: 380px) { button, select { font-size: 13px; padding: 8px 10px; } }
 </style>
 </head>
 <body>
@@ -149,10 +60,10 @@ button:active, select:active { background: #2a2d35; }
 <div id="status">漠视安全屋 · 外面怎样都无所谓</div>
 <script>
 const scenes = {
-  living: 'https://raw.githubusercontent.com/winkyme24/moshi-safehouse-simulator/main/imagine_images/sYvsf.jpg',
-  kitchen: 'https://raw.githubusercontent.com/winkyme24/moshi-safehouse-simulator/main/imagine_images/pRnN6.jpg',
-  bedroom: 'https://raw.githubusercontent.com/winkyme24/moshi-safehouse-simulator/main/imagine_images/f0xkC.jpg',
-  nook: 'https://raw.githubusercontent.com/winkyme24/moshi-safehouse-simulator/main/imagine_images/cPqSx.jpg'
+  living: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+  kitchen: 'linear-gradient(180deg, #0d1b2a 0%, #1b263b 50%, #415a77 100%)',
+  bedroom: 'linear-gradient(180deg, #2d1b00 0%, #4a2c0a 50%, #6b3e0a 100%)',
+  nook: 'linear-gradient(180deg, #1c1c1c 0%, #2a2a2a 50%, #3a3a3a 100%)'
 };
 const sceneEl = document.getElementById('scene');
 const lightEl = document.getElementById('light-overlay');
@@ -168,7 +79,7 @@ let audioCtx, noiseSource, gainNode;
 let noiseOn = false;
 let lightningInterval;
 function setScene(key) {
-  sceneEl.style.backgroundImage = `url(${scenes[key]})`;
+  sceneEl.style.background = scenes[key];
 }
 function clearWeather() {
   [rain, snow, fog, sun].forEach(el => el.style.opacity = 0);
@@ -179,74 +90,34 @@ function clearWeather() {
 function setWeather(type) {
   clearWeather();
   switch(type) {
-    case 'rain':
-      rain.style.opacity = 0.7;
-      lightEl.style.opacity = 0.2;
-      lightEl.style.background = 'rgba(30,40,60,0.3)';
-      break;
+    case 'rain': rain.style.opacity = 0.7; lightEl.style.opacity = 0.2; lightEl.style.background = 'rgba(30,40,60,0.3)'; break;
     case 'storm':
-      rain.style.opacity = 0.8;
-      lightEl.style.opacity = 0.25;
-      lightEl.style.background = 'rgba(20,25,40,0.4)';
+      rain.style.opacity = 0.8; lightEl.style.opacity = 0.25; lightEl.style.background = 'rgba(20,25,40,0.4)';
       lightningInterval = setInterval(() => {
         lightning.style.opacity = 0.9;
         setTimeout(() => lightning.style.opacity = 0, 80);
-        setTimeout(() => {
-          lightning.style.opacity = 0.6;
-          setTimeout(() => lightning.style.opacity = 0, 60);
-        }, 120);
+        setTimeout(() => { lightning.style.opacity = 0.6; setTimeout(() => lightning.style.opacity = 0, 60); }, 120);
       }, 4000 + Math.random()*5000);
       break;
-    case 'snow':
-      snow.style.opacity = 0.8;
-      lightEl.style.opacity = 0.15;
-      lightEl.style.background = 'rgba(200,220,255,0.15)';
-      break;
-    case 'ash':
-      lightEl.style.opacity = 0.4;
-      lightEl.style.background = 'rgba(180,60,40,0.25)';
-      break;
-    case 'fog':
-      fog.style.opacity = 0.6;
-      lightEl.style.opacity = 0.2;
-      lightEl.style.background = 'rgba(180,180,180,0.2)';
-      break;
-    case 'sun':
-      sun.style.opacity = 0.6;
-      lightEl.style.opacity = 0.3;
-      lightEl.style.background = 'rgba(255,220,150,0.2)';
-      break;
-    default:
-      lightEl.style.opacity = 0.1;
-      lightEl.style.background = 'rgba(255,200,120,0.1)';
+    case 'snow': snow.style.opacity = 0.8; lightEl.style.opacity = 0.15; lightEl.style.background = 'rgba(200,220,255,0.15)'; break;
+    case 'ash': lightEl.style.opacity = 0.4; lightEl.style.background = 'rgba(180,60,40,0.25)'; break;
+    case 'fog': fog.style.opacity = 0.6; lightEl.style.opacity = 0.2; lightEl.style.background = 'rgba(180,180,180,0.2)'; break;
+    case 'sun': sun.style.opacity = 0.6; lightEl.style.opacity = 0.3; lightEl.style.background = 'rgba(255,220,150,0.2)'; break;
+    default: lightEl.style.opacity = 0.1; lightEl.style.background = 'rgba(255,200,120,0.1)';
   }
 }
 function toggleNoise() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (noiseOn) {
-    if (noiseSource) noiseSource.stop();
-    noiseOn = false;
-    noiseBtn.textContent = '白噪声：关';
-    return;
-  }
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (noiseOn) { if (noiseSource) noiseSource.stop(); noiseOn = false; noiseBtn.textContent = '白噪声：关'; return; }
   const bufferSize = 2 * audioCtx.sampleRate;
   const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
   const output = noiseBuffer.getChannelData(0);
-  for (let i = 0; i < bufferSize; i++) {
-    output[i] = Math.random() * 2 - 1;
-  }
+  for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
   noiseSource = audioCtx.createBufferSource();
-  noiseSource.buffer = noiseBuffer;
-  noiseSource.loop = true;
-  gainNode = audioCtx.createGain();
-  gainNode.gain.value = 0.15;
-  noiseSource.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  noiseSource.start();
-  noiseOn = true;
-  noiseBtn.textContent = '白噪声：开';
+  noiseSource.buffer = noiseBuffer; noiseSource.loop = true;
+  gainNode = audioCtx.createGain(); gainNode.gain.value = 0.15;
+  noiseSource.connect(gainNode); gainNode.connect(audioCtx.destination); noiseSource.start();
+  noiseOn = true; noiseBtn.textContent = '白噪声：开';
 }
 sceneSelect.addEventListener('change', () => setScene(sceneSelect.value));
 weatherSelect.addEventListener('change', () => setWeather(weatherSelect.value));
